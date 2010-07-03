@@ -35,7 +35,7 @@ module Text.Blaze.Html5                                                         
     , del                                                                       -- util/GenerateHtmlVariant.hs:126
     , details                                                                   -- util/GenerateHtmlVariant.hs:126
     , dfn                                                                       -- util/GenerateHtmlVariant.hs:126
-    , div                                                                       -- util/GenerateHtmlVariant.hs:126
+    , div_                                                                      -- util/GenerateHtmlVariant.hs:126
     , dl                                                                        -- util/GenerateHtmlVariant.hs:126
     , dt                                                                        -- util/GenerateHtmlVariant.hs:126
     , em                                                                        -- util/GenerateHtmlVariant.hs:126
@@ -51,7 +51,7 @@ module Text.Blaze.Html5                                                         
     , h4                                                                        -- util/GenerateHtmlVariant.hs:126
     , h5                                                                        -- util/GenerateHtmlVariant.hs:126
     , h6                                                                        -- util/GenerateHtmlVariant.hs:126
-    , head                                                                      -- util/GenerateHtmlVariant.hs:126
+    , head_                                                                     -- util/GenerateHtmlVariant.hs:126
     , header                                                                    -- util/GenerateHtmlVariant.hs:126
     , hgroup                                                                    -- util/GenerateHtmlVariant.hs:126
     , hr                                                                        -- util/GenerateHtmlVariant.hs:126
@@ -67,7 +67,7 @@ module Text.Blaze.Html5                                                         
     , legend                                                                    -- util/GenerateHtmlVariant.hs:126
     , li                                                                        -- util/GenerateHtmlVariant.hs:126
     , link                                                                      -- util/GenerateHtmlVariant.hs:126
-    , map                                                                       -- util/GenerateHtmlVariant.hs:126
+    , map_                                                                      -- util/GenerateHtmlVariant.hs:126
     , mark                                                                      -- util/GenerateHtmlVariant.hs:126
     , menu                                                                      -- util/GenerateHtmlVariant.hs:126
     , meta                                                                      -- util/GenerateHtmlVariant.hs:126
@@ -93,7 +93,7 @@ module Text.Blaze.Html5                                                         
     , select                                                                    -- util/GenerateHtmlVariant.hs:126
     , small                                                                     -- util/GenerateHtmlVariant.hs:126
     , source                                                                    -- util/GenerateHtmlVariant.hs:126
-    , span                                                                      -- util/GenerateHtmlVariant.hs:126
+    , span_                                                                     -- util/GenerateHtmlVariant.hs:126
     , strong                                                                    -- util/GenerateHtmlVariant.hs:126
     , style                                                                     -- util/GenerateHtmlVariant.hs:126
     , sub                                                                       -- util/GenerateHtmlVariant.hs:126
@@ -543,16 +543,16 @@ dfn = Parent "<dfn" "</dfn>"                                                    
 --
 -- Example:
 --
--- > div $ span $ text "foo"
+-- > div_ $ span $ text "foo"
 --
 -- Result:
 --
 -- > <div><span>foo</span></div>
 --
-div :: Html  -- ^ Inner HTML.                                                   -- util/GenerateHtmlVariant.hs:184
-    -> Html  -- ^ Resulting HTML.                                               -- util/GenerateHtmlVariant.hs:185
-div = Parent "<div" "</div>"                                                    -- util/GenerateHtmlVariant.hs:186
-{-# INLINE div #-}                                                              -- util/GenerateHtmlVariant.hs:187
+div_ :: Html  -- ^ Inner HTML.                                                  -- util/GenerateHtmlVariant.hs:184
+     -> Html  -- ^ Resulting HTML.                                              -- util/GenerateHtmlVariant.hs:185
+div_ = Parent "<div" "</div>"                                                   -- util/GenerateHtmlVariant.hs:186
+{-# INLINE div_ #-}                                                             -- util/GenerateHtmlVariant.hs:187
 
 -- | Combinator for the @\<dl>@ element.
 --
@@ -782,16 +782,16 @@ h6 = Parent "<h6" "</h6>"                                                       
 --
 -- Example:
 --
--- > head $ span $ text "foo"
+-- > head_ $ span $ text "foo"
 --
 -- Result:
 --
 -- > <head><span>foo</span></head>
 --
-head :: Html  -- ^ Inner HTML.                                                  -- util/GenerateHtmlVariant.hs:184
-     -> Html  -- ^ Resulting HTML.                                              -- util/GenerateHtmlVariant.hs:185
-head = Parent "<head" "</head>"                                                 -- util/GenerateHtmlVariant.hs:186
-{-# INLINE head #-}                                                             -- util/GenerateHtmlVariant.hs:187
+head_ :: Html  -- ^ Inner HTML.                                                 -- util/GenerateHtmlVariant.hs:184
+      -> Html  -- ^ Resulting HTML.                                             -- util/GenerateHtmlVariant.hs:185
+head_ = Parent "<head" "</head>"                                                -- util/GenerateHtmlVariant.hs:186
+{-# INLINE head_ #-}                                                            -- util/GenerateHtmlVariant.hs:187
 
 -- | Combinator for the @\<header>@ element.
 --
@@ -1018,16 +1018,16 @@ link = Leaf "<link" " />"                                                       
 --
 -- Example:
 --
--- > map $ span $ text "foo"
+-- > map_ $ span $ text "foo"
 --
 -- Result:
 --
 -- > <map><span>foo</span></map>
 --
-map :: Html  -- ^ Inner HTML.                                                   -- util/GenerateHtmlVariant.hs:184
-    -> Html  -- ^ Resulting HTML.                                               -- util/GenerateHtmlVariant.hs:185
-map = Parent "<map" "</map>"                                                    -- util/GenerateHtmlVariant.hs:186
-{-# INLINE map #-}                                                              -- util/GenerateHtmlVariant.hs:187
+map_ :: Html  -- ^ Inner HTML.                                                  -- util/GenerateHtmlVariant.hs:184
+     -> Html  -- ^ Resulting HTML.                                              -- util/GenerateHtmlVariant.hs:185
+map_ = Parent "<map" "</map>"                                                   -- util/GenerateHtmlVariant.hs:186
+{-# INLINE map_ #-}                                                             -- util/GenerateHtmlVariant.hs:187
 
 -- | Combinator for the @\<mark>@ element.
 --
@@ -1406,16 +1406,16 @@ source = Parent "<source" "</source>"                                           
 --
 -- Example:
 --
--- > span $ span $ text "foo"
+-- > span_ $ span $ text "foo"
 --
 -- Result:
 --
 -- > <span><span>foo</span></span>
 --
-span :: Html  -- ^ Inner HTML.                                                  -- util/GenerateHtmlVariant.hs:184
-     -> Html  -- ^ Resulting HTML.                                              -- util/GenerateHtmlVariant.hs:185
-span = Parent "<span" "</span>"                                                 -- util/GenerateHtmlVariant.hs:186
-{-# INLINE span #-}                                                             -- util/GenerateHtmlVariant.hs:187
+span_ :: Html  -- ^ Inner HTML.                                                 -- util/GenerateHtmlVariant.hs:184
+      -> Html  -- ^ Resulting HTML.                                             -- util/GenerateHtmlVariant.hs:185
+span_ = Parent "<span" "</span>"                                                -- util/GenerateHtmlVariant.hs:186
+{-# INLINE span_ #-}                                                            -- util/GenerateHtmlVariant.hs:187
 
 -- | Combinator for the @\<strong>@ element.
 --

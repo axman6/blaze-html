@@ -50,7 +50,7 @@ module Text.Blaze.Html5.Attributes                                              
     , hreflang                                                                  -- util/GenerateHtmlVariant.hs:126
     , http_equiv                                                                -- util/GenerateHtmlVariant.hs:126
     , icon                                                                      -- util/GenerateHtmlVariant.hs:126
-    , id                                                                        -- util/GenerateHtmlVariant.hs:126
+    , id_                                                                       -- util/GenerateHtmlVariant.hs:126
     , ismap                                                                     -- util/GenerateHtmlVariant.hs:126
     , item                                                                      -- util/GenerateHtmlVariant.hs:126
     , itemprop                                                                  -- util/GenerateHtmlVariant.hs:126
@@ -61,11 +61,11 @@ module Text.Blaze.Html5.Attributes                                              
     , loop                                                                      -- util/GenerateHtmlVariant.hs:126
     , low                                                                       -- util/GenerateHtmlVariant.hs:126
     , manifest                                                                  -- util/GenerateHtmlVariant.hs:126
-    , max                                                                       -- util/GenerateHtmlVariant.hs:126
+    , max_                                                                      -- util/GenerateHtmlVariant.hs:126
     , maxlength                                                                 -- util/GenerateHtmlVariant.hs:126
     , media                                                                     -- util/GenerateHtmlVariant.hs:126
     , method                                                                    -- util/GenerateHtmlVariant.hs:126
-    , min                                                                       -- util/GenerateHtmlVariant.hs:126
+    , min_                                                                      -- util/GenerateHtmlVariant.hs:126
     , multiple                                                                  -- util/GenerateHtmlVariant.hs:126
     , name                                                                      -- util/GenerateHtmlVariant.hs:126
     , novalidate                                                                -- util/GenerateHtmlVariant.hs:126
@@ -110,7 +110,7 @@ module Text.Blaze.Html5.Attributes                                              
     , shape                                                                     -- util/GenerateHtmlVariant.hs:126
     , size                                                                      -- util/GenerateHtmlVariant.hs:126
     , sizes                                                                     -- util/GenerateHtmlVariant.hs:126
-    , span                                                                      -- util/GenerateHtmlVariant.hs:126
+    , span_                                                                     -- util/GenerateHtmlVariant.hs:126
     , spellcheck                                                                -- util/GenerateHtmlVariant.hs:126
     , src                                                                       -- util/GenerateHtmlVariant.hs:126
     , srcdoc                                                                    -- util/GenerateHtmlVariant.hs:126
@@ -785,16 +785,16 @@ icon = attribute " icon=\""                                                     
 --
 -- Example:
 --
--- > div ! id "bar" $ "Hello."
+-- > div ! id_ "bar" $ "Hello."
 --
 -- Result:
 --
 -- > <div id="bar">Hello.</div>
 --
-id :: AttributeValue  -- ^ Attribute value.                                     -- util/GenerateHtmlVariant.hs:248
-   -> Attribute       -- ^ Resulting attribute.                                 -- util/GenerateHtmlVariant.hs:249
-id = attribute " id=\""                                                         -- util/GenerateHtmlVariant.hs:250
-{-# INLINE id #-}                                                               -- util/GenerateHtmlVariant.hs:251
+id_ :: AttributeValue  -- ^ Attribute value.                                    -- util/GenerateHtmlVariant.hs:248
+    -> Attribute       -- ^ Resulting attribute.                                -- util/GenerateHtmlVariant.hs:249
+id_ = attribute " id=\""                                                        -- util/GenerateHtmlVariant.hs:250
+{-# INLINE id_ #-}                                                              -- util/GenerateHtmlVariant.hs:251
 
 -- | Combinator for the @ismap@ attribute.
 --
@@ -950,16 +950,16 @@ manifest = attribute " manifest=\""                                             
 --
 -- Example:
 --
--- > div ! max "bar" $ "Hello."
+-- > div ! max_ "bar" $ "Hello."
 --
 -- Result:
 --
 -- > <div max="bar">Hello.</div>
 --
-max :: AttributeValue  -- ^ Attribute value.                                    -- util/GenerateHtmlVariant.hs:248
-    -> Attribute       -- ^ Resulting attribute.                                -- util/GenerateHtmlVariant.hs:249
-max = attribute " max=\""                                                       -- util/GenerateHtmlVariant.hs:250
-{-# INLINE max #-}                                                              -- util/GenerateHtmlVariant.hs:251
+max_ :: AttributeValue  -- ^ Attribute value.                                   -- util/GenerateHtmlVariant.hs:248
+     -> Attribute       -- ^ Resulting attribute.                               -- util/GenerateHtmlVariant.hs:249
+max_ = attribute " max=\""                                                      -- util/GenerateHtmlVariant.hs:250
+{-# INLINE max_ #-}                                                             -- util/GenerateHtmlVariant.hs:251
 
 -- | Combinator for the @maxlength@ attribute.
 --
@@ -1010,16 +1010,16 @@ method = attribute " method=\""                                                 
 --
 -- Example:
 --
--- > div ! min "bar" $ "Hello."
+-- > div ! min_ "bar" $ "Hello."
 --
 -- Result:
 --
 -- > <div min="bar">Hello.</div>
 --
-min :: AttributeValue  -- ^ Attribute value.                                    -- util/GenerateHtmlVariant.hs:248
-    -> Attribute       -- ^ Resulting attribute.                                -- util/GenerateHtmlVariant.hs:249
-min = attribute " min=\""                                                       -- util/GenerateHtmlVariant.hs:250
-{-# INLINE min #-}                                                              -- util/GenerateHtmlVariant.hs:251
+min_ :: AttributeValue  -- ^ Attribute value.                                   -- util/GenerateHtmlVariant.hs:248
+     -> Attribute       -- ^ Resulting attribute.                               -- util/GenerateHtmlVariant.hs:249
+min_ = attribute " min=\""                                                      -- util/GenerateHtmlVariant.hs:250
+{-# INLINE min_ #-}                                                             -- util/GenerateHtmlVariant.hs:251
 
 -- | Combinator for the @multiple@ attribute.
 --
@@ -1685,16 +1685,16 @@ sizes = attribute " sizes=\""                                                   
 --
 -- Example:
 --
--- > div ! span "bar" $ "Hello."
+-- > div ! span_ "bar" $ "Hello."
 --
 -- Result:
 --
 -- > <div span="bar">Hello.</div>
 --
-span :: AttributeValue  -- ^ Attribute value.                                   -- util/GenerateHtmlVariant.hs:248
-     -> Attribute       -- ^ Resulting attribute.                               -- util/GenerateHtmlVariant.hs:249
-span = attribute " span=\""                                                     -- util/GenerateHtmlVariant.hs:250
-{-# INLINE span #-}                                                             -- util/GenerateHtmlVariant.hs:251
+span_ :: AttributeValue  -- ^ Attribute value.                                  -- util/GenerateHtmlVariant.hs:248
+      -> Attribute       -- ^ Resulting attribute.                              -- util/GenerateHtmlVariant.hs:249
+span_ = attribute " span=\""                                                    -- util/GenerateHtmlVariant.hs:250
+{-# INLINE span_ #-}                                                            -- util/GenerateHtmlVariant.hs:251
 
 -- | Combinator for the @spellcheck@ attribute.
 --

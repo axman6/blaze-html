@@ -44,7 +44,7 @@ module Text.Blaze.Html4.Strict.Attributes                                       
     , href                                                                      -- util/GenerateHtmlVariant.hs:126
     , hreflang                                                                  -- util/GenerateHtmlVariant.hs:126
     , http_equiv                                                                -- util/GenerateHtmlVariant.hs:126
-    , id                                                                        -- util/GenerateHtmlVariant.hs:126
+    , id_                                                                       -- util/GenerateHtmlVariant.hs:126
     , label                                                                     -- util/GenerateHtmlVariant.hs:126
     , lang                                                                      -- util/GenerateHtmlVariant.hs:126
     , maxlength                                                                 -- util/GenerateHtmlVariant.hs:126
@@ -84,7 +84,7 @@ module Text.Blaze.Html4.Strict.Attributes                                       
     , selected                                                                  -- util/GenerateHtmlVariant.hs:126
     , shape                                                                     -- util/GenerateHtmlVariant.hs:126
     , size                                                                      -- util/GenerateHtmlVariant.hs:126
-    , span                                                                      -- util/GenerateHtmlVariant.hs:126
+    , span_                                                                     -- util/GenerateHtmlVariant.hs:126
     , src                                                                       -- util/GenerateHtmlVariant.hs:126
     , standby                                                                   -- util/GenerateHtmlVariant.hs:126
     , style                                                                     -- util/GenerateHtmlVariant.hs:126
@@ -664,16 +664,16 @@ http_equiv = attribute " http-equiv=\""                                         
 --
 -- Example:
 --
--- > div ! id "bar" $ "Hello."
+-- > div ! id_ "bar" $ "Hello."
 --
 -- Result:
 --
 -- > <div id="bar">Hello.</div>
 --
-id :: AttributeValue  -- ^ Attribute value.                                     -- util/GenerateHtmlVariant.hs:248
-   -> Attribute       -- ^ Resulting attribute.                                 -- util/GenerateHtmlVariant.hs:249
-id = attribute " id=\""                                                         -- util/GenerateHtmlVariant.hs:250
-{-# INLINE id #-}                                                               -- util/GenerateHtmlVariant.hs:251
+id_ :: AttributeValue  -- ^ Attribute value.                                    -- util/GenerateHtmlVariant.hs:248
+    -> Attribute       -- ^ Resulting attribute.                                -- util/GenerateHtmlVariant.hs:249
+id_ = attribute " id=\""                                                        -- util/GenerateHtmlVariant.hs:250
+{-# INLINE id_ #-}                                                              -- util/GenerateHtmlVariant.hs:251
 
 -- | Combinator for the @label@ attribute.
 --
@@ -1264,16 +1264,16 @@ size = attribute " size=\""                                                     
 --
 -- Example:
 --
--- > div ! span "bar" $ "Hello."
+-- > div ! span_ "bar" $ "Hello."
 --
 -- Result:
 --
 -- > <div span="bar">Hello.</div>
 --
-span :: AttributeValue  -- ^ Attribute value.                                   -- util/GenerateHtmlVariant.hs:248
-     -> Attribute       -- ^ Resulting attribute.                               -- util/GenerateHtmlVariant.hs:249
-span = attribute " span=\""                                                     -- util/GenerateHtmlVariant.hs:250
-{-# INLINE span #-}                                                             -- util/GenerateHtmlVariant.hs:251
+span_ :: AttributeValue  -- ^ Attribute value.                                  -- util/GenerateHtmlVariant.hs:248
+      -> Attribute       -- ^ Resulting attribute.                              -- util/GenerateHtmlVariant.hs:249
+span_ = attribute " span=\""                                                    -- util/GenerateHtmlVariant.hs:250
+{-# INLINE span_ #-}                                                            -- util/GenerateHtmlVariant.hs:251
 
 -- | Combinator for the @src@ attribute.
 --
