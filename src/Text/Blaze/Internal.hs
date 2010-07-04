@@ -54,12 +54,15 @@ import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
 import GHC.Exts (IsString (..))
 
+import qualified Text.Blaze.Internal.Builder.Core as B
+
 -- | A static string that supports efficient output to all possible backends.
 --
 data StaticString = StaticString
     { getString         :: String        -- ^ Regular Haskell string
     , getUtf8ByteString :: S.ByteString  -- ^ UTF-8 encoded bytestring
     , getText           :: Text          -- ^ Text value
+    , getUtf8ByteArray  :: B.ByteArray   -- ^ Byte array
     }
 
 -- 'StaticString's should only be converted from string literals, as far as I
@@ -67,13 +70,15 @@ data StaticString = StaticString
 --
 instance IsString StaticString where
     fromString s = let t = T.pack s
-                   in StaticString s (T.encodeUtf8 t) t
+                       b = T.encodeUtf8 t
+                       a = B.makeByteArray b
+                   in StaticString s b t a
 
 instance Monoid StaticString where
     mempty = fromString mempty
     {-# INLINE mempty #-}
-    mappend (StaticString x1 y1 z1) (StaticString x2 y2 z2) =
-        StaticString (mappend x1 x2) (mappend y1 y2) (mappend z1 z2)
+    mappend (StaticString x1 y1 z1 u) (StaticString x2 y2 z2 _) =
+        StaticString (mappend x1 x2) (mappend y1 y2) (mappend z1 z2) u
     {-# INLINE mappend #-}
 
 -- | A string denoting input from different string representations.
@@ -271,7 +276,8 @@ unsafeByteString = Content . ByteString
 --
 textTag :: Text  -- ^ Text to create a tag from
         -> Tag   -- ^ Resulting tag
-textTag t = Tag $ StaticString (T.unpack t) (T.encodeUtf8 t) t
+textTag t = let b = T.encodeUtf8 t
+            in Tag $ StaticString (T.unpack t) b t (B.makeByteArray b)
 
 -- | Create a 'Tag' from a 'String'.
 --

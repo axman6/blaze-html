@@ -17,7 +17,7 @@ import qualified Text.Blaze.Internal.Builder.Html as B
 --
 fromChoiceString :: ChoiceString  -- ^ String to render
                  -> Builder       -- ^ Resulting builder
-fromChoiceString (Static     s) = B.copyByteString $ getUtf8ByteString s
+fromChoiceString (Static     s) = B.fromByteArray $ getUtf8ByteArray s
 fromChoiceString (String     s) = B.fromHtmlEscapedString s
 fromChoiceString (Text       s) = B.fromHtmlEscapedText s
 fromChoiceString (ByteString s) = B.copyByteString s

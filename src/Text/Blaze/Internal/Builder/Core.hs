@@ -6,16 +6,22 @@ module Text.Blaze.Internal.Builder.Core
       -- * Main builder type
       Builder (..)
 
+      -- * ByteArray type
+    , ByteArray
+    , makeByteArray
+
       -- * Custom writes to the builder
     , Write (..)
     , writeByte
     , writeByteString
+    , writeByteArray
     , writeSingleton
     , writeList
 
       -- * Creating builders
     , singleton
     , copyByteString
+    , fromByteArray
 
       -- * Extracting the result from a builder
     , toLazyByteString
@@ -63,6 +69,21 @@ instance Monoid Builder where
     mconcat = foldr mappend mempty
     {-# INLINE mconcat #-}
 
+-- | A simple byte array.
+--
+data ByteArray = ByteArray
+    {-# UNPACK #-} !(Ptr Word8)  -- ^ Start byte
+    {-# UNPACK #-} !Int          -- ^ Length
+
+-- | Create a 'ByteArray' from a 'S.ByteString'
+--
+makeByteArray :: S.ByteString  -- ^ Bytestring to unwrap
+              -> ByteArray     -- ^ Resulting byte array
+makeByteArray bs = ByteArray (ptr `plusPtr` o) l
+  where
+    (fptr, o, l) = S.toForeignPtr bs
+    ptr = unsafeForeignPtrToPtr fptr
+
 -- | Write abstraction so we can avoid some gory and bloody details.
 --
 data Write = Write
@@ -94,6 +115,13 @@ writeByteString bs = Write l io
   (fptr, o, l) = S.toForeignPtr bs
   io pf = withForeignPtr fptr $ \p -> copyBytes pf (p `plusPtr` o) l
 {-# INLINE writeByteString #-}
+
+-- | Write a 'ByteArray'
+--
+writeByteArray :: ByteArray  -- ^ 'ByteArray' to write.
+               -> Write      -- ^ Resulting write
+writeByteArray (ByteArray ptr l) = Write l $ \dst -> copyBytes ptr dst l
+{-# INLINE writeByteArray #-}
 
 -- | Construct a 'Builder' from a single 'Write' abstraction.
 --
@@ -148,6 +176,13 @@ copyByteString :: S.ByteString  -- ^ Strict 'S.ByteString' to copy
                -> Builder       -- ^ Resulting 'Builder'
 copyByteString = writeSingleton writeByteString
 {-# INLINE copyByteString #-}
+
+-- | Create a 'Builder' from a 'ByteArray'
+--
+fromByteArray :: ByteArray  -- ^ 'ByteArray' to copy
+              -> Builder    -- ^ Resulting 'Builder'
+fromByteArray = writeSingleton writeByteArray
+{-# INLINE fromByteArray #-}
 
 -- | Copied from Data.ByteString.Lazy.
 --
