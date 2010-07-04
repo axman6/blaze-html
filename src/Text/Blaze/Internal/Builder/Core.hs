@@ -120,7 +120,7 @@ writeByteString bs = Write l io
 --
 writeByteArray :: ByteArray  -- ^ 'ByteArray' to write.
                -> Write      -- ^ Resulting write
-writeByteArray (ByteArray ptr l) = Write l $ \dst -> copyBytes ptr dst l
+writeByteArray (ByteArray ptr l) = Write l $ \dst -> copyBytes dst ptr l
 {-# INLINE writeByteArray #-}
 
 -- | Construct a 'Builder' from a single 'Write' abstraction.
