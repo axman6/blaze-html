@@ -60,6 +60,25 @@ renderBuilder = go mempty
         B.copyByteString (getUtf8ByteString begin)
             `mappend` attrs
             `mappend` B.copyByteString (getUtf8ByteString end)
+
+    go _ (StaticContent s) = B.copyByteString $ getUtf8ByteString s
+    go _ (StringContent s) = B.fromHtmlEscapedString s
+    go _ (TextContent s) = B.fromHtmlEscapedText s
+    go _ (ByteStringContent s) = B.copyByteString s
+    go attrs (PreEscapedContent s) = case s of
+        StringContent t -> B.fromString t
+        TextContent t -> B.fromText t
+        t -> go attrs t
+    go attrs (ExternalContent s) = case s of
+        -- Check that the sequence "</" is *not* in the external data.
+        StringContent t ->
+            if "</" `isInfixOf` t then mempty else B.fromString t
+        TextContent t ->
+            if "</" `T.isInfixOf` t then mempty else B.fromText t
+        ByteStringContent t ->
+            if "</" `S.isInfixOf` t then mempty else B.copyByteString t
+        t -> go attrs t
+
     go attrs (AddAttribute key value h) =
         go (B.copyByteString (getUtf8ByteString key)
             `mappend` fromChoiceString value
@@ -70,7 +89,6 @@ renderBuilder = go mempty
             `mappend` fromChoiceString value
             `mappend` B.fromChar '"'
             `mappend` attrs) h
-    go _ (Content content)  = fromChoiceString content
     go attrs (Append h1 h2) = go attrs h1 `mappend` go attrs h2
     go _ Empty              = mempty
     {-# NOINLINE go #-}

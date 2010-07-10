@@ -110,8 +110,20 @@ data HtmlM a
     | Leaf StaticString StaticString
     -- | Open tag, end tag
     | Open StaticString StaticString
-    -- | HTML content
-    | Content ChoiceString
+
+    -- | Static data
+    | StaticContent StaticString
+    -- | A Haskell String
+    | StringContent String
+    -- | A Text value
+    | TextContent Text
+    -- | An encoded bytestring
+    | ByteStringContent S.ByteString
+    -- | A pre-escaped string
+    | PreEscapedContent (HtmlM a)
+    -- | External data in style/script tags, should be checked for validity
+    | ExternalContent (HtmlM a)
+
     -- | Concatenation of two HTML pieces
     | forall b c. Append (HtmlM b) (HtmlM c)
     -- | Add an attribute to the inner HTML. Key, value, HTML to receive the
@@ -143,7 +155,7 @@ instance Monad HtmlM where
     {-# INLINE (>>=) #-}
 
 instance IsString (HtmlM a) where
-    fromString = Content . fromString
+    fromString = StringContent
     {-# INLINE fromString #-}
 
 -- | Type for an HTML tag. This can be seen as an internal string type used by
@@ -195,28 +207,28 @@ dataAttribute tag value = Attribute $
 --
 text :: Text  -- ^ Text to render.
      -> Html  -- ^ Resulting HTML fragment.
-text = Content . Text
+text = TextContent
 {-# INLINE text #-}
 
 -- | Render text without escaping.
 --
 preEscapedText :: Text  -- ^ Text to insert.
                -> Html  -- Resulting HTML fragment.
-preEscapedText = Content . PreEscaped . Text
+preEscapedText = PreEscapedContent . TextContent
 {-# INLINE preEscapedText #-}
 
 -- | Create an HTML snippet from a 'String'.
 --
 string :: String  -- ^ String to insert.
        -> Html    -- ^ Resulting HTML fragment.
-string = Content . String
+string = StringContent
 {-# INLINE string #-}
 
 -- | Create an HTML snippet from a 'String' without escaping
 --
 preEscapedString :: String  -- ^ String to insert.
                  -> Html    -- ^ Resulting HTML fragment.
-preEscapedString = Content . PreEscaped . String
+preEscapedString = PreEscapedContent . StringContent
 {-# INLINE preEscapedString #-}
 
 -- | Create an HTML snippet from a datatype that instantiates 'Show'.
@@ -245,7 +257,7 @@ preEscapedShowHtml = preEscapedString . show
 --
 unsafeByteString :: ByteString  -- ^ Value to insert.
                  -> Html        -- ^ Resulting HTML fragment.
-unsafeByteString = Content . ByteString
+unsafeByteString = ByteStringContent
 {-# INLINE unsafeByteString #-}
 
 -- | Create a 'Tag' from some 'Text'.
@@ -327,7 +339,7 @@ instance Attributable (HtmlM a -> HtmlM b) where
 -- combinators.
 --
 external :: HtmlM a -> HtmlM a
-external (Content x) = Content $ External x
+-- external (Content x) = Content $ External x
 external (Append x y) = Append (external x) (external y)
 external (Parent x y z) = Parent x y $ external z
 external (AddAttribute x y z) = AddAttribute x y $ external z
